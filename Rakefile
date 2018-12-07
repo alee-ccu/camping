@@ -29,29 +29,6 @@ CLEAN.include ['**/.*.sw?', '*.gem', '.config', 'test/test.log', '.*.pt']
 
 task :default => :check
 
-## RDoc
-
-begin
-  gem 'rdoc', '~>3.9.0'
-rescue LoadError
-  task :docs do
-    puts "** Camping needs RDoc 3.9 in order to use the Flipbook template."
-  end
-else
-  require 'rdoc/task'
-  RDoc::Task.new(:docs) do |rdoc|
-    # We have a recent version of RDoc, so let's use flipbook.
-    require 'rdoc/generator/singledarkfish'
-    rdoc.options += ['-f', 'singledarkfish', *RDOC_OPTS]
-    rdoc.template = "flipbook"
-    
-    rdoc.rdoc_dir = 'doc'
-    rdoc.title = "Camping, a Microframework"
-    rdoc.rdoc_files.add ['README', 'lib/camping-unabridged.rb', 'lib/camping/**/*.rb', 'book/*']
-  end
-end
-
-  
 task :rubygems_docs do
   require 'rubygems/doc_manager'
   
